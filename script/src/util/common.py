@@ -63,7 +63,12 @@ def get_server_ip(server_ip):
 
 
 def log_setup():
-    log_handler = logging.handlers.WatchedFileHandler(os.path.join(log_file_path, 'conf_op.log'))
+    log_handler = logging.Handler.RotatingFileHandler(
+        os.path.join(log_file_path, 'conf_op.log'),
+        maxBytes=20000000,
+        backupCount=5
+    )
+
     formatter = logging.Formatter('%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s')
     # formatter.converter = time.gmtime  # if you want UTC time
     log_handler.setFormatter(formatter)
